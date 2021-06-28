@@ -1,0 +1,76 @@
+.App {
+    width: 100vw;
+    height: 100vh;
+}
+
+.main {
+    width: 55rem;
+    height: 60rem;
+    border: 0.2rem dashed rgba(0, 0, 0,0.5);
+    border-radius: 0.7rem;
+}
+
+
+.input {
+    width: 30rem;
+    height: 4rem;
+    border-radius: 1rem;
+    padding: 0 1rem;
+    outline: none;
+    font-size: 1.7rem;
+    transition: 0.2s all linear;
+}
+
+.input::placeholder {
+    font-size: 1.6rem;
+    color: gray;
+}
+
+.input:focus {
+    box-shadow: 0 0 0.5rem 0.2rem #D3D3D3;
+}
+
+.btn {
+    height: 4rem;
+    width: 7rem;
+    border-radius: 1rem;
+    outline: none;
+    font-size: 1.7rem;
+    transition: 0.2s all linear;
+}
+
+
+
+.cards {
+    width: 80%;
+    font-size: 1.7rem;
+    animation: 0.5s fadeIn linear;
+}
+
+.icons {
+    width: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.2rem;
+}
+
+.div-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
