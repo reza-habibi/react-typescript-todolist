@@ -3,7 +3,7 @@ import { FaEdit, FaCheck , FaUndo } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ITodo } from "../../App";
 
-interface IProps {
+type IProps = {
   todo: ITodo[];
   remove: (index: number) => void;
   changeEditMode: (index: number) => void;
@@ -23,7 +23,7 @@ const TodoComponent: React.FC<IProps> = ({
         return (
           <div
             key={index}
-            className="cards d-flex justify-content-between align-items-center"
+            className="cards mb-3 d-flex justify-content-between align-items-center"
           >
             {item.status ? (
               <div className="pl-3 w-75 bg-success text-light rounded">
