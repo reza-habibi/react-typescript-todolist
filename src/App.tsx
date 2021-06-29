@@ -4,27 +4,26 @@ import TodoForm from "./components/TodoForm/TodoForm";
 import TodoComponent from "./components/Todos/TodoComponent";
 import "./App.Style.scss";
 
-
- export type ITodo = {
+export type ITodo = {
   text: string;
   editMode: Boolean;
+  status:Boolean
 };
 
-function App() {
-  
 
+
+function App() {
   const [value, setValue] = useState<string>("");
   const [todo, setTodo] = useState<ITodo[]>([]);
   const [btnValue, setBtnValue] = useState<string>("ADD");
 
-
   function get(e: React.ChangeEvent<HTMLInputElement>) {
-    let input = e.target ;
+    let input = e.target;
     setValue(input.value);
   }
   function set() {
     let index = todo.findIndex((item) => item.editMode === true);
-
+    
     if (value === "" || value === " ") {
       toast.error("Please fill in the field", {
         position: "top-right",
@@ -41,6 +40,7 @@ function App() {
         {
           text: value,
           editMode: false,
+          status:false
         },
       ]);
 
@@ -59,7 +59,6 @@ function App() {
       let newTodo = [...todo];
       newTodo[index].text = value;
       newTodo[index].editMode = false;
-
       toast.info("Successfully edited!", {
         position: "top-right",
         autoClose: 5000,
@@ -75,6 +74,9 @@ function App() {
       setBtnValue("ADD");
       setValue("");
     }
+
+    todo.map((item)=>localStorage.setItem("todo", item.text))
+    
   }
 
   function changeEditMode(index: number) {
@@ -85,6 +87,38 @@ function App() {
 
     setTodo(newTodo);
   }
+
+  function changeStatus(index: number) {
+    let newTodo = [...todo];
+
+    if(newTodo[index].status===false){
+      newTodo[index].status = true;
+      toast.success("Task Completed!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }else{
+    todo[index].status = false;
+    toast.error("Task back to uncompleted list!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
+    }
+
+    
+    setTodo(newTodo)
+  }
+
 
   function remove(index: number) {
     let newTodo = [...todo];
@@ -113,7 +147,7 @@ function App() {
       <div className="main d-flex flex-column align-items-center">
         <h1 className="mt-5">ToDo App</h1>
 
-        <TodoForm 
+        <TodoForm
           handleSubmit={handleSubmit}
           value={value}
           get={get}
@@ -122,10 +156,11 @@ function App() {
         />
         <ToastContainer style={{ fontSize: "18px" }} />
 
-        <TodoComponent 
-        todo={todo}
-        remove={remove}
-        changeEditMode={changeEditMode}
+        <TodoComponent
+          todo={todo}
+          remove={remove}
+          changeEditMode={changeEditMode}
+          changeStatus={changeStatus}
         />
       </div>
     </div>
