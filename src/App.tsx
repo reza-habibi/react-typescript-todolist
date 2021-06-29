@@ -24,7 +24,9 @@ function App() {
   function set() {
     let index = todo.findIndex((item) => item.editMode === true);
     
-    if (value === "" || value === " ") {
+    let valueRegex=/^$|\s+/
+
+    if (value === "" || valueRegex.test(value)) {
       toast.error("Please fill in the field", {
         position: "top-right",
         autoClose: 5000,
