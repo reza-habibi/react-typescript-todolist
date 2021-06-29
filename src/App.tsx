@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
-import { Button, Form } from "react-bootstrap";
-
+import TodoForm from "./components/TodoForm/TodoForm";
+import TodoComponent from "./components/Todos/TodoComponent";
 import "./App.Style.scss";
 
+
+ export type ITodo = {
+  text: string;
+  editMode: Boolean;
+};
+
 function App() {
-  type ITodo = {
-    text: string;
-    editMode: Boolean;
-  };
+  
 
   const [value, setValue] = useState<string>("");
   const [todo, setTodo] = useState<ITodo[]>([]);
@@ -112,53 +113,20 @@ function App() {
       <div className="main d-flex flex-column align-items-center">
         <h1 className="mt-5">ToDo App</h1>
 
-        <Form
-          className="w-75 my-5 d-flex justify-content-between align-items-center"
-          onSubmit={handleSubmit}
-        >
-          <Form.Control
-            type="text"
-            placeholder="Add Your Task ..."
-            className="input"
-            onChange={get}
-            value={value}
-          />
-          <Button onClick={set}>{btnValue}</Button>
-        </Form>
+        <TodoForm 
+          handleSubmit={handleSubmit}
+          value={value}
+          get={get}
+          set={set}
+          btnValue={btnValue}
+        />
         <ToastContainer style={{ fontSize: "18px" }} />
 
-        <div className="div-card">
-          {todo.map((item, index) => (
-            <div
-              key={index}
-              className="cards d-flex justify-content-between align-items-center"
-            >
-              <div>
-                <p className="title">{item.text}</p>
-              </div>
-              {item.editMode ? null : (
-                <div className="icons">
-                  <MdDelete
-                    style={{
-                      fontSize: "2rem",
-                      cursor: "pointer",
-                      color: "#E30B5C	",
-                    }}
-                    onClick={() => remove(index)}
-                  />
-                  <FaEdit
-                    style={{
-                      fontSize: "2rem",
-                      cursor: "pointer",
-                      color: "0437F2",
-                    }}
-                    onClick={() => changeEditMode(index)}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <TodoComponent 
+        todo={todo}
+        remove={remove}
+        changeEditMode={changeEditMode}
+        />
       </div>
     </div>
   );
